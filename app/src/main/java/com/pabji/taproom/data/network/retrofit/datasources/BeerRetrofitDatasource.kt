@@ -8,6 +8,14 @@ class BeerRetrofitDataSource(apiClient: BeersApiClient) : BeerRemoteDatasource {
 
     private val service = apiClient.service
 
-    override suspend fun getBeers(): List<BeerApiResponse> = service.getAllBeers()
+    override suspend fun getBeers(offset: Int): List<BeerApiResponse> {
+        return with(service.getBeers(offset)) {
+            var response = emptyList<BeerApiResponse>()
+            if (isSuccessful) {
+                body()?.let { response = it }
+            }
+            response
+        }
+    }
 
 }

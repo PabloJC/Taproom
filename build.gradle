@@ -34,7 +34,7 @@ allprojects {
                 navigationFragment : "androidx.navigation:navigation-fragment-ktx:$nav_version",
                 navigationKtx      : "androidx.navigation:navigation-ui-ktx:$nav_version",
                 roomRuntime        : "androidx.room:room-runtime:$room_version",
-                roomKtx            : "androidx.room:room-ktx:$room_version",
+                roomKtx            : "androidx.room:room-ktx:$room_version"
         ]
 
         commonLibs = [

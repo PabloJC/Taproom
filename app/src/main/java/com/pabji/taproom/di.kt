@@ -4,12 +4,15 @@ import android.app.Application
 import androidx.room.Room
 import com.pabji.data.datasources.BeerLocalDatasource
 import com.pabji.data.datasources.BeerRemoteDatasource
+import com.pabji.data.repositories.BeerRepository
+import com.pabji.data.repositories.BeerRepositoryImpl
 import com.pabji.taproom.data.database.room.MyRoomDatabase
 import com.pabji.taproom.data.database.room.datasources.BeerRoomDatasource
 import com.pabji.taproom.data.network.retrofit.BeersApiClient
 import com.pabji.taproom.data.network.retrofit.datasources.BeerRetrofitDataSource
 import com.pabji.taproom.ui.main.MainFragment
 import com.pabji.taproom.ui.main.MainViewModel
+import com.pabji.usecases.GetBeers
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
@@ -22,10 +25,7 @@ fun Application.initDI() {
     startKoin {
         androidContext(this@initDI)
         modules(
-            listOf(
-                appModule,
-                scopesModule
-            )
+            listOf(appModule, dataModule, scopesModule)
         )
     }
 }
@@ -36,15 +36,20 @@ val appModule = module {
         Room.databaseBuilder(get(), MyRoomDatabase::class.java, "myDb.db")
             .fallbackToDestructiveMigration().build()
     }
-    single { BeersApiClient("https://api.punkapi.com/v2") }
+    single { BeersApiClient("https://api.punkapi.com/v2/") }
 
     factory<BeerRemoteDatasource> { BeerRetrofitDataSource(get()) }
     factory<BeerLocalDatasource> { BeerRoomDatasource(get()) }
 }
 
+val dataModule = module {
+    factory<BeerRepository> { BeerRepositoryImpl(get(), get()) }
+}
+
 val scopesModule = module {
 
     scope(named<MainFragment>()) {
-        viewModel { MainViewModel(get()) }
+        scoped { GetBeers(get()) }
+        viewModel { MainViewModel(get(), get()) }
     }
 }

@@ -1,6 +1,7 @@
 package com.pabji.taproom.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +15,10 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import org.koin.android.scope.currentScope
 import org.koin.android.viewmodel.scope.viewModel
 
-
 class MainFragment : Fragment() {
 
-    private val viewModel: MainViewModel by currentScope.viewModel(this)
     private lateinit var adapter: BeerListAdapter
+    private val viewModel: MainViewModel by currentScope.viewModel(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +42,7 @@ class MainFragment : Fragment() {
     }
 
     private fun updateList(list: List<ItemBeer>?) {
+        Log.d("NUMLIST", "${list?.size ?: 0}")
         adapter.itemList = list ?: emptyList()
     }
 

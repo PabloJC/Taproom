@@ -5,9 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import com.pabji.domain.model.ItemBeer
 import com.pabji.taproom.ui.common.BaseViewModel
 import com.pabji.taproom.ui.common.Event
+import com.pabji.usecases.GetBeers
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainViewModel(
+    private val getBeers: GetBeers,
     uiDispatcher: CoroutineDispatcher
 ) : BaseViewModel(uiDispatcher) {
 
@@ -22,32 +26,9 @@ class MainViewModel(
             }
 
     fun loadData() {
-        _beerList.value = listOf(
-            ItemBeer(
-                "Beer1",
-                "Tab1",
-                "https://www.bodecall.com/images/stories/virtuemart/product/cruzcampo-botella-33.png",
-                true
-            ),
-            ItemBeer(
-                "Beer2",
-                "Tab2",
-                "https://www.bodecall.com/images/stories/virtuemart/product/cruzcampo-botella-33.png",
-                false
-            ),
-            ItemBeer(
-                "Beer3",
-                "Tab3",
-                "https://www.bodecall.com/images/stories/virtuemart/product/cruzcampo-botella-33.png",
-                false
-            ),
-            ItemBeer(
-                "Beer4",
-                "Tab4",
-                "https://www.bodecall.com/images/stories/virtuemart/product/cruzcampo-botella-33.png",
-                true
-            )
-        )
+        launch {
+            getBeers().collect { _beerList.value = it }
+        }
     }
 
     fun onItemClicked(product: ItemBeer) {
