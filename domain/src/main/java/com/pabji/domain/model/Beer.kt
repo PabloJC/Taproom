@@ -2,6 +2,7 @@ package com.pabji.domain.model
 
 data class Beer(
     val name: String,
+    val tabline: String = "",
     val description: String = "",
     val imageUrl: String = "",
     val abv: Double = 0.0,

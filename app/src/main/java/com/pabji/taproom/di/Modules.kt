@@ -1,6 +1,10 @@
 package com.pabji.taproom.di
 
 import android.app.Application
+import androidx.room.Room
+import com.pabji.data.datasources.BeerLocalDatasource
+import com.pabji.taproom.data.database.room.MyRoomDatabase
+import com.pabji.taproom.data.database.room.datasources.BeerRoomDatasource
 import com.pabji.taproom.ui.main.MainFragment
 import com.pabji.taproom.ui.main.MainViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,6 +24,11 @@ fun Application.initDI() {
 
 val appModule = module {
     single<CoroutineDispatcher> { Dispatchers.Main }
+    single {
+        Room.databaseBuilder(get(), MyRoomDatabase::class.java, "myDb.db")
+            .fallbackToDestructiveMigration().build()
+    }
+    factory<BeerLocalDatasource> { BeerRoomDatasource(get()) }
 }
 
 val scopesModule = module {

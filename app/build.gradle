@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -37,9 +38,12 @@ android {
 }
 
 dependencies {
+    implementation project(":data")
     implementation project(":domain")
+    implementation project(":usecases")
 
     implementation androidLibs.values()
     implementation kotlinLibs.values()
     implementation libs.values()
+    kapt androidKaptLibs.values()
 }
