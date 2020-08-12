@@ -4,5 +4,5 @@ apply plugin: 'kotlin'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlinLibs.values()
+    implementation commonLibs.values()
 }

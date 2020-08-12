@@ -3,6 +3,5 @@ apply plugin: 'kotlin'
 
 dependencies {
     implementation project(":domain")
-
-    implementation kotlinLibs.values()
+    implementation commonLibs.values()
 }

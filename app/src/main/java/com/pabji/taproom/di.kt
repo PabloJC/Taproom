@@ -1,10 +1,13 @@
-package com.pabji.taproom.di
+package com.pabji.taproom
 
 import android.app.Application
 import androidx.room.Room
 import com.pabji.data.datasources.BeerLocalDatasource
+import com.pabji.data.datasources.BeerRemoteDatasource
 import com.pabji.taproom.data.database.room.MyRoomDatabase
 import com.pabji.taproom.data.database.room.datasources.BeerRoomDatasource
+import com.pabji.taproom.data.network.retrofit.BeersApiClient
+import com.pabji.taproom.data.network.retrofit.datasources.BeerRetrofitDataSource
 import com.pabji.taproom.ui.main.MainFragment
 import com.pabji.taproom.ui.main.MainViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,7 +21,12 @@ import org.koin.dsl.module
 fun Application.initDI() {
     startKoin {
         androidContext(this@initDI)
-        modules(listOf(appModule, scopesModule))
+        modules(
+            listOf(
+                appModule,
+                scopesModule
+            )
+        )
     }
 }
 
@@ -28,6 +36,9 @@ val appModule = module {
         Room.databaseBuilder(get(), MyRoomDatabase::class.java, "myDb.db")
             .fallbackToDestructiveMigration().build()
     }
+    single { BeersApiClient("https://api.punkapi.com/v2") }
+
+    factory<BeerRemoteDatasource> { BeerRetrofitDataSource(get()) }
     factory<BeerLocalDatasource> { BeerRoomDatasource(get()) }
 }
 

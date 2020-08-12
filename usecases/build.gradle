@@ -6,5 +6,5 @@ dependencies {
     implementation project(":data")
     implementation project(":domain")
 
-    implementation kotlinLibs.values()
+    implementation commonLibs.values()
 }

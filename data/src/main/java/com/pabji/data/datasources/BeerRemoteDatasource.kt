@@ -1,7 +1,7 @@
 package com.pabji.data.datasources
 
-import com.pabji.domain.model.Beer
+import com.pabji.domain.api.BeerApiResponse
 
 interface BeerRemoteDatasource {
-    suspend fun getBeers(): List<Beer>
+    suspend fun getBeers(): List<BeerApiResponse>
 }

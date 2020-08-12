@@ -43,7 +43,7 @@ dependencies {
     implementation project(":usecases")
 
     implementation androidLibs.values()
-    implementation kotlinLibs.values()
+    implementation commonLibs.values()
     implementation libs.values()
     kapt androidKaptLibs.values()
 }

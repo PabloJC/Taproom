@@ -7,7 +7,7 @@ import com.pabji.domain.model.ItemBeer
 
 @Entity(tableName = "beers")
 data class BeerEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Long = 0,
     val name: String,
     val tabline: String,
@@ -23,16 +23,8 @@ fun BeerEntity.toItemBeer() = ItemBeer(id, name, tabline, imageUrl, !isBarrelEmp
 fun List<BeerEntity>.toItemBeerList() = map { it.toItemBeer() }
 
 fun BeerEntity.toBeer() =
-    Beer(name, tabline, description, imageUrl, abv, ibu, foodPairing, isBarrelEmpty)
+    Beer(id, name, tabline, description, imageUrl, abv, ibu, foodPairing, isBarrelEmpty)
 
-fun Beer.toBeerEntity() = BeerEntity(
-    name = name,
-    tabline = tabline,
-    description = description,
-    imageUrl = imageUrl,
-    abv = abv,
-    ibu = ibu,
-    foodPairing = foodPairing,
-    isBarrelEmpty = isBarrelEmpty
-)
+fun Beer.toBeerEntity() =
+    BeerEntity(id, name, tabline, description, imageUrl, abv, ibu, foodPairing, isBarrelEmpty)
 
