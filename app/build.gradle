@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation project(":domain")
+
     implementation androidLibs.values()
     implementation kotlinLibs.values()
     implementation libs.values()

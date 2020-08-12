@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import com.pabji.domain.model.ItemBeer
 import com.pabji.taproom.R
-import com.pabji.taproom.model.ItemBeer
 import com.pabji.taproom.ui.common.notifyChanges
 import kotlinx.android.synthetic.main.item_beer_list.view.*
 import kotlin.properties.Delegates
