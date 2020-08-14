@@ -5,7 +5,6 @@ import com.pabji.data.datasources.BeerRemoteDatasource
 import com.pabji.domain.api.MAX_BEERS
 import com.pabji.domain.api.PAGE_LIMIT
 import com.pabji.domain.model.Beer
-import com.pabji.domain.model.ItemBeer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -15,7 +14,7 @@ class BeerRepositoryImpl(
     private val remoteDataSource: BeerRemoteDatasource
 ) : BeerRepository {
 
-    override suspend fun getBeers(): Flow<List<ItemBeer>> = flow {
+    override suspend fun getBeers(): Flow<List<Beer>> = flow {
         localDataSource.getBeers().collect { items ->
             if (items.size < MAX_BEERS) {
                 val numPages = (MAX_BEERS / PAGE_LIMIT) + 1

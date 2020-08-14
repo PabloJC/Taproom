@@ -21,7 +21,9 @@
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <include layout="@layout/view_detail_toolbar_container" />
+            <include
+                layout="@layout/view_detail_toolbar_container"
+                android:id="@+id/toolbar_container" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -40,7 +42,9 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/view_detail_description_container" />
+        <include
+            layout="@layout/view_detail_description_container"
+            android:id="@+id/description_container" />
 
     </androidx.core.widget.NestedScrollView>
 

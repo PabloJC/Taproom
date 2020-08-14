@@ -4,22 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.pabji.domain.model.ItemBeer
 import com.pabji.taproom.R
+import com.pabji.taproom.data.uimodel.UIItemBeer
+import com.pabji.taproom.databinding.FragmentMainBinding
 import com.pabji.taproom.ui.common.EventObserver
 import com.pabji.taproom.ui.common.GridSpacingItemDecoration
+import com.pabji.taproom.ui.common.base.BaseFragmentViewBinding
 import com.pabji.taproom.ui.common.gone
 import com.pabji.taproom.ui.common.visible
-import kotlinx.android.synthetic.main.fragment_main.*
 import org.koin.android.scope.currentScope
 import org.koin.android.viewmodel.scope.viewModel
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragmentViewBinding<FragmentMainBinding>() {
 
     private lateinit var adapter: BeerListAdapter
     private val viewModel: MainViewModel by currentScope.viewModel(this)
@@ -29,13 +29,13 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_main, container, false)
+    ): View? = onCreateViewBinding(FragmentMainBinding.inflate(inflater, container, false))
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = view.findNavController()
         setRecyclerView()
-        progress_bar.visible()
+        binding.progressBar.visible()
         with(viewModel) {
             beerList.observe(viewLifecycleOwner, Observer(::updateList))
             navigation.observe(viewLifecycleOwner, EventObserver { id ->
@@ -45,13 +45,13 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun updateList(list: List<ItemBeer>?) {
-        progress_bar.gone()
+    private fun updateList(list: List<UIItemBeer>?) {
+        binding.progressBar.gone()
         adapter.itemList = list ?: emptyList()
     }
 
     private fun setRecyclerView() {
-        recycler_view.let {
+        binding.recyclerView.let {
             adapter = BeerListAdapter(viewModel::onItemClicked)
             val layoutManager = GridLayoutManager(context, GRID_SPAN_COUNT)
             val dividerItemDecoration = GridSpacingItemDecoration(

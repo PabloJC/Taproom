@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.pabji.domain.api.BeerApiResponse
 import com.pabji.domain.model.Beer
-import com.pabji.domain.model.ItemBeer
 
 @Entity(tableName = "beers")
 data class BeerEntity(
@@ -20,11 +19,10 @@ data class BeerEntity(
     val isBarrelEmpty: Boolean
 )
 
-fun BeerEntity.toItemBeer() = ItemBeer(id, name, tabline, imageUrl, !isBarrelEmpty)
-fun List<BeerEntity>.toItemBeerList() = map { it.toItemBeer() }
-
 fun BeerEntity.toBeer() =
-    Beer(id, name, description, imageUrl, abv, ibu, foodPairing, isBarrelEmpty)
+    Beer(id, name, description, tabline, imageUrl, abv, ibu, foodPairing, isBarrelEmpty)
+
+fun List<BeerEntity>.toItemBeerList() = map { it.toBeer() }
 
 fun BeerApiResponse.toBeerEntity() = BeerEntity(
     id,

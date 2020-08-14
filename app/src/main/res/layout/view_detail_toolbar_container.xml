@@ -13,8 +13,7 @@
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
         android:padding="40dp"
-        android:background="@color/white"
-        android:src="@mipmap/ic_launcher" />
+        android:background="@color/white" />
 
     <View
         android:layout_width="match_parent"
