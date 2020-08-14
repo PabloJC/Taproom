@@ -24,6 +24,12 @@ abstract class BaseFragmentViewBinding<T : ViewBinding> : Fragment() {
     protected fun setToolbar(toolbar: Toolbar) {
         (activity as? AppCompatActivity)?.let {
             it.setSupportActionBar(toolbar)
+        }
+    }
+
+    protected fun setToolbarWithBack(toolbar: Toolbar) {
+        setToolbar(toolbar)
+        (activity as? AppCompatActivity)?.let {
             it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
             it.supportActionBar?.setHomeButtonEnabled(true)
             setTitle("")

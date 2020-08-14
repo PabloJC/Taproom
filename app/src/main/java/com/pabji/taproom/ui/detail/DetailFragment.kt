@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import androidx.transition.TransitionInflater
 import coil.api.load
 import com.pabji.taproom.data.uimodel.UIBeerDetail
 import com.pabji.taproom.databinding.FragmentDetailBinding
@@ -27,8 +26,6 @@ class DetailFragment : BaseFragmentViewBinding<FragmentDetailBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.slide_left)
     }
 
     override fun onCreateView(
@@ -39,7 +36,7 @@ class DetailFragment : BaseFragmentViewBinding<FragmentDetailBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setToolbar(binding.toolbar)
+        setToolbarWithBack(binding.toolbar)
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateBeer))
         binding.btEmptyBeer.setOnClickListener {
             viewModel.onEmptyBarrelButtonClick()

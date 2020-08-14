@@ -35,6 +35,7 @@ class MainFragment : BaseFragmentViewBinding<FragmentMainBinding>() {
         super.onViewCreated(view, savedInstanceState)
         navController = view.findNavController()
         setRecyclerView()
+        setToolbar(binding.toolbar)
         binding.progressBar.visible()
         with(viewModel) {
             beerList.observe(viewLifecycleOwner, Observer(::updateList))

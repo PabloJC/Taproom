@@ -34,16 +34,22 @@ fun Application.initDI() {
     }
 }
 
+val MAX_BEERS = named("MAX_BEERS")
+val API_PAGE_LIMIT = named("API_PAGE_LIMIT")
+val DISPATCHER_IO = named("DISPATCHER_IO")
+val DISPATCHER_MAIN = named("DISPATCHER_MAIN")
+val DISPATCHER_DEFAULT = named("DISPATCHER_DEFAULT")
+
 val appModule = module {
-    single<CoroutineDispatcher> { Dispatchers.Main }
+
     single {
         Room.databaseBuilder(get(), MyRoomDatabase::class.java, "myDb.db")
             .fallbackToDestructiveMigration().build()
     }
     single { BeersApiClient("https://api.punkapi.com/v2/") }
 
-    factory<BeerRemoteDatasource> { BeerRetrofitDataSource(get()) }
-    factory<BeerLocalDatasource> { BeerRoomDatasource(get()) }
+    factory<BeerRemoteDatasource> { BeerRetrofitDataSource(get(), get(DISPATCHER_IO)) }
+    factory<BeerLocalDatasource> { BeerRoomDatasource(get(), get(DISPATCHER_DEFAULT)) }
 }
 
 val dataModule = module {
@@ -52,14 +58,21 @@ val dataModule = module {
 
 val scopesModule = module {
 
+    single<CoroutineDispatcher>(DISPATCHER_MAIN) { Dispatchers.Main }
+    single<CoroutineDispatcher>(DISPATCHER_IO) { Dispatchers.IO }
+    single<CoroutineDispatcher>(DISPATCHER_DEFAULT) { Dispatchers.Default }
+
+    factory(MAX_BEERS) { 100 }
+    factory(API_PAGE_LIMIT) { 20 }
+
     scope(named<MainFragment>()) {
-        scoped { GetBeers(get()) }
-        viewModel { MainViewModel(get(), get()) }
+        viewModel { MainViewModel(get(), get(DISPATCHER_MAIN)) }
+        scoped { GetBeers(get(), get(API_PAGE_LIMIT), get(MAX_BEERS)) }
     }
 
     scope(named<DetailFragment>()) {
         viewModel { (id: Long) ->
-            DetailViewModel(id, get(), get(), get())
+            DetailViewModel(id, get(), get(), get(DISPATCHER_MAIN))
         }
         scoped { GetBeerDetail(get()) }
         scoped { SetEmptyBarrel(get()) }

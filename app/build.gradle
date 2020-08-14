@@ -51,4 +51,8 @@ dependencies {
     implementation commonLibs.values()
     implementation libs.values()
     kapt androidKaptLibs.values()
+
+    testImplementation testLibs.values()
+    testImplementation androidxTestLibs.values()
+    androidTestImplementation androidTestLibs.values()
 }
