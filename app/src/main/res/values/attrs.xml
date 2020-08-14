@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BubbleLayout">
+        <attr name="bubbleTitle" format="string" />
+        <attr name="bubbleColor" format="enum">
+            <enum name="purple" value="0" />
+            <enum name="orange" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

@@ -28,12 +28,9 @@ class BeerRepositoryImpl(
         }
     }
 
-    override suspend fun getBeerDetail(itemBeer: ItemBeer): Beer? =
-        localDataSource.getBeerById(itemBeer.id)
+    override suspend fun getBeerDetail(id: Long): Flow<Beer> =
+        localDataSource.getBeerById(id)
 
-    override suspend fun setBeerBarrel(itemBeer: ItemBeer, isEmptyBarrel: Boolean) {
-        return localDataSource.setBarrelEmptyById(itemBeer.id, isEmptyBarrel)
-
-    }
-
+    override suspend fun setEmptyBarrel(id: Long, isEmptyBarrel: Boolean) =
+        localDataSource.setBarrelEmptyById(id, isEmptyBarrel)
 }

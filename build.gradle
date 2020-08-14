@@ -13,6 +13,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.0.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }
 
@@ -38,9 +39,9 @@ allprojects {
         ]
 
         commonLibs = [
-                stdlib    : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
-                coroutines: 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2',
-                gson      : "com.google.code.gson:gson:2.8.6"
+                stdlib       : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+                coroutines   : 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2',
+                gson         : "com.google.code.gson:gson:2.8.6"
         ]
 
         androidKaptLibs = [
@@ -48,10 +49,10 @@ allprojects {
         ]
 
         libs = [
-                koin                  : "org.koin:koin-android-viewmodel:2.1.6",
-                coil                  : "io.coil-kt:coil:0.11.0",
-                retrofit              : "com.squareup.retrofit2:retrofit:$retrofit_version",
-                retrofitGsonConverter : "com.squareup.retrofit2:converter-gson:$retrofit_version"
+                koin                 : "org.koin:koin-android-viewmodel:2.1.6",
+                coil                 : "io.coil-kt:coil:0.11.0",
+                retrofit             : "com.squareup.retrofit2:retrofit:$retrofit_version",
+                retrofitGsonConverter: "com.squareup.retrofit2:converter-gson:$retrofit_version"
         ]
     }
 }

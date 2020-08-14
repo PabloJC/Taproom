@@ -1,9 +1,10 @@
 package com.pabji.taproom.ui.main
 
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.pabji.domain.model.ItemBeer
@@ -35,6 +36,7 @@ class BeerListAdapter(
     class ItemBeerViewHolder(view: View, private val onItemClicked: (ItemBeer) -> Unit) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: ItemBeer) {
+            Log.d("ItemBeerViewHolder", item.toString())
             itemView.run {
                 tv_name.text = item.name
                 tv_tagline.text = item.tabline
@@ -42,9 +44,7 @@ class BeerListAdapter(
                     crossfade(true)
                     error(R.mipmap.ic_launcher)
                 }
-                ll_content.setBackgroundColor(
-                    ContextCompat.getColor(context, if (item.isAvailable) R.color.white else R.color.gray)
-                )
+                cl_container.setBackgroundColor(if (item.isAvailable) Color.WHITE else Color.LTGRAY)
                 setOnClickListener { onItemClicked(item) }
             }
         }

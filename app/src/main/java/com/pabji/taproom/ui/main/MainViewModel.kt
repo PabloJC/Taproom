@@ -15,15 +15,15 @@ class MainViewModel(
     uiDispatcher: CoroutineDispatcher
 ) : BaseViewModel(uiDispatcher) {
 
-    private val _navigation = MutableLiveData<Event<ItemBeer>>()
-    val navigation: LiveData<Event<ItemBeer>> = _navigation
+    private val _navigation = MutableLiveData<Event<Long>>()
+    val navigation: LiveData<Event<Long>> = _navigation
 
     private val _beerList = MutableLiveData<List<ItemBeer>>()
-    val beerList : LiveData<List<ItemBeer>>
-            get() {
-                if (_beerList.value == null) loadData()
-                return _beerList
-            }
+    val beerList: LiveData<List<ItemBeer>>
+        get() {
+            if (_beerList.value == null) loadData()
+            return _beerList
+        }
 
     fun loadData() {
         launch {
@@ -31,7 +31,7 @@ class MainViewModel(
         }
     }
 
-    fun onItemClicked(product: ItemBeer) {
-        _navigation.value = Event(product)
+    fun onItemClicked(item: ItemBeer) {
+        _navigation.value = Event(item.id)
     }
 }

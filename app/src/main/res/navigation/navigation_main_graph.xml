@@ -14,5 +14,10 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.pabji.taproom.ui.detail.DetailFragment"
-        android:label="DetailFragment" />
+        android:label="DetailFragment">
+        <argument
+            android:name="item_id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
 </navigation>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/detail_content_description_padding"
+    tools:showIn="@layout/fragment_detail">
+
+    <TextView
+        android:id="@+id/tv_description_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_description_label"
+        style="@style/DetailLabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/DetailDescription"
+        tools:text="Descripcion"
+        app:layout_constraintTop_toBottomOf="@id/tv_description_label" />
+
+    <TextView
+        android:id="@+id/tv_food_pairing_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/detail_items_margin_top"
+        android:text="@string/food_pairing_label"
+        style="@style/DetailLabel"
+        app:layout_constraintTop_toBottomOf="@id/tv_description" />
+
+    <TextView
+        android:id="@+id/tv_food_pairing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/detail_description_text_margin_top"
+        tools:text="Food1\nFood2\nFood3"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/tv_food_pairing_label" />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/detail_items_margin_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tv_food_pairing">
+
+        <com.pabji.taproom.ui.common.BubbleLayout
+            android:id="@+id/bb_abv"
+            android:layout_width="@dimen/bubble_size"
+            android:layout_height="@dimen/bubble_size"
+            app:bubbleTitle="@string/abv_label"
+            app:bubbleColor="purple"
+            app:layout_constraintTop_toBottomOf="@id/tv_food_pairing" />
+
+        <com.pabji.taproom.ui.common.BubbleLayout
+            android:id="@+id/bb_ibu"
+            android:layout_width="@dimen/bubble_size"
+            android:layout_height="@dimen/bubble_size"
+            android:layout_marginStart="@dimen/bubble_separation"
+            app:bubbleTitle="@string/ibu_label"
+            app:bubbleColor="orange" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

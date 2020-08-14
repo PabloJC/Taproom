@@ -7,6 +7,4 @@
         android:endColor="@color/transparent"
         android:startColor="@color/darkTransparent"
         android:centerColor="@color/transparent" />
-
-    <corners android:radius="0dp" />
 </shape>

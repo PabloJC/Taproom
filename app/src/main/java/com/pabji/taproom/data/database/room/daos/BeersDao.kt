@@ -20,8 +20,5 @@ interface BeersDao {
     suspend fun update(id: Long, isBarrelEmpty: Boolean)
 
     @Query("SELECT * from beers WHERE id = :id")
-    suspend fun getBeerById(id: Long): BeerEntity?
-
-    @Query("DELETE FROM beers ")
-    suspend fun removeAll()
+    fun getBeerById(id: Long): Flow<BeerEntity>
 }

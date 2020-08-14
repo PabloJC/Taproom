@@ -10,9 +10,13 @@ import com.pabji.taproom.data.database.room.MyRoomDatabase
 import com.pabji.taproom.data.database.room.datasources.BeerRoomDatasource
 import com.pabji.taproom.data.network.retrofit.BeersApiClient
 import com.pabji.taproom.data.network.retrofit.datasources.BeerRetrofitDataSource
+import com.pabji.taproom.ui.detail.DetailFragment
+import com.pabji.taproom.ui.detail.DetailViewModel
 import com.pabji.taproom.ui.main.MainFragment
 import com.pabji.taproom.ui.main.MainViewModel
+import com.pabji.usecases.GetBeerDetail
 import com.pabji.usecases.GetBeers
+import com.pabji.usecases.SetEmptyBarrel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
@@ -51,5 +55,13 @@ val scopesModule = module {
     scope(named<MainFragment>()) {
         scoped { GetBeers(get()) }
         viewModel { MainViewModel(get(), get()) }
+    }
+
+    scope(named<DetailFragment>()) {
+        viewModel { (id: Long) ->
+            DetailViewModel(id, get(), get(), get())
+        }
+        scoped { GetBeerDetail(get()) }
+        scoped { SetEmptyBarrel(get()) }
     }
 }

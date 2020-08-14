@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Taproom</string>
+    <string name="image_transition">imageTransition</string>
+    <string name="detail_description_label">Description</string>
+    <string name="ibu_label">IBU</string>
+    <string name="abv_label">ABV</string>
+    <string name="empty_barrel">EMPTY BARREL</string>
+    <string name="no_empty_barrel">NOT EMPTY BARREL</string>
+    <string name="food_pairing_label">Food pairing</string>
+    <string name="not_available_label">Not available</string>
 </resources>

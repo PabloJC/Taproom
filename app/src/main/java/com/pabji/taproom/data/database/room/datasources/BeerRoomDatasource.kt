@@ -21,10 +21,10 @@ class BeerRoomDatasource(database: MyRoomDatabase) : BeerLocalDatasource {
     override suspend fun saveBeers(it: List<BeerApiResponse>) =
         beersDao.insert(it.map { it.toBeerEntity() })
 
-    override suspend fun getBeerById(id: Long): Beer? = beersDao.getBeerById(id)?.toBeer()
+    override suspend fun getBeerById(id: Long): Flow<Beer> =
+        beersDao.getBeerById(id).map { it.toBeer() }
 
     override suspend fun setBarrelEmptyById(id: Long, emptyBarrel: Boolean) =
         beersDao.update(id, emptyBarrel)
 
-    override suspend fun removeBeers() = beersDao.removeAll()
 }
