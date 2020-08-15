@@ -4,4 +4,6 @@ apply plugin: 'kotlin'
 dependencies {
     implementation project(":domain")
     implementation commonLibs.values()
+
+    testImplementation testLibs.values()
 }

@@ -7,4 +7,5 @@ dependencies {
     implementation project(":domain")
 
     implementation commonLibs.values()
+    testImplementation testLibs.values()
 }

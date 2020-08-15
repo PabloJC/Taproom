@@ -1,6 +1,7 @@
 package com.pabji.taproom.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,7 @@ class MainFragment : BaseFragmentViewBinding<FragmentMainBinding>() {
     }
 
     private fun updateList(list: List<UIItemBeer>?) {
+        Log.d("ITEMS", "${list?.size}")
         binding.progressBar.gone()
         adapter.itemList = list ?: emptyList()
     }

@@ -62,12 +62,12 @@ val scopesModule = module {
     single<CoroutineDispatcher>(DISPATCHER_IO) { Dispatchers.IO }
     single<CoroutineDispatcher>(DISPATCHER_DEFAULT) { Dispatchers.Default }
 
-    factory(MAX_BEERS) { 100 }
-    factory(API_PAGE_LIMIT) { 20 }
+    factory(MAX_BEERS) { 20 }
+    factory(API_PAGE_LIMIT) { 80 }
 
     scope(named<MainFragment>()) {
         viewModel { MainViewModel(get(), get(DISPATCHER_MAIN)) }
-        scoped { GetBeers(get(), get(API_PAGE_LIMIT), get(MAX_BEERS)) }
+        scoped { GetBeers(get(), get(MAX_BEERS), get(API_PAGE_LIMIT)) }
     }
 
     scope(named<DetailFragment>()) {

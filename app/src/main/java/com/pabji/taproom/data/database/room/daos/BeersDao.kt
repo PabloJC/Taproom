@@ -13,7 +13,7 @@ interface BeersDao {
     @Query("SELECT * FROM beers")
     fun getBeers(): Flow<List<BeerEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(list: List<BeerEntity>)
 
     @Query("UPDATE beers SET isBarrelEmpty = :isBarrelEmpty WHERE id = :id")

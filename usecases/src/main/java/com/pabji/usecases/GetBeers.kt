@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 class GetBeers(
     private val repository: BeerRepository,
-    private val limit: Int,
-    private val max: Int
+    private val max: Int,
+    private val limit: Int
 ) {
-    suspend operator fun invoke(): Flow<List<Beer>> = repository.getBeers(limit, max)
+    suspend operator fun invoke(): Flow<List<Beer>> = repository.getBeers(max, limit)
 }

@@ -2,6 +2,7 @@ package com.pabji.data.repositories
 
 import com.pabji.data.datasources.BeerLocalDatasource
 import com.pabji.data.datasources.BeerRemoteDatasource
+import com.pabji.domain.api.BeerApiResponse
 import com.pabji.domain.model.Beer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
@@ -11,13 +12,13 @@ class BeerRepositoryImpl(
     private val remoteDataSource: BeerRemoteDatasource
 ) : BeerRepository {
 
-    override suspend fun getBeers(limit: Int, max: Int): Flow<List<Beer>> =
+    override suspend fun getBeers(max: Int, limit: Int): Flow<List<Beer>> =
         localDataSource.getBeers().onEach { items ->
-            if (items.size < max) {
-                val numPages = (max / limit) + 1
-                (1..numPages).forEach {
-                    val newBeers = remoteDataSource.getBeers(it, limit)
-                    localDataSource.saveBeers(newBeers)
+            val itemsInDB = items.size
+            if (itemsInDB < max) {
+                val page = (itemsInDB / limit) + 1
+                remoteDataSource.getBeers(page).let { newItems ->
+                    localDataSource.saveBeers(newItems.filterValidBeers(max, itemsInDB))
                 }
             }
         }
@@ -27,4 +28,16 @@ class BeerRepositoryImpl(
 
     override suspend fun setEmptyBarrel(id: Long, isEmptyBarrel: Boolean) =
         localDataSource.setBarrelEmptyById(id, isEmptyBarrel)
+
+    private fun List<BeerApiResponse>.filterValidBeers(
+        max: Int,
+        numCurrentItems: Int
+    ): List<BeerApiResponse> {
+        val numValidItems = when {
+            size >= max -> max
+            size >= max - numCurrentItems -> max - numCurrentItems
+            else -> size
+        }
+        return take(numValidItems)
+    }
 }
