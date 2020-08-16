@@ -7,7 +7,7 @@ This app is a basic app of beers using the Api https://punkapi.com/. Is composed
 Have Internet connectivity
 
 
-<img width="964" alt="java 8 and prio java 8  array review example" src="https://github.com/PabloJC/Taproom/tree/PabloJC-patch-1/screenshots/DetailScreen.png">
+<img width="300" alt="Detail Screen" src="https://github.com/PabloJC/Taproom/PabloJC-patch-1/screenshots/DetailScreen.png">
 
 
 ### Installing
