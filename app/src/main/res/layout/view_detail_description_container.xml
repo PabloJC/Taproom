@@ -64,7 +64,7 @@
             android:layout_height="@dimen/bubble_size"
             android:layout_marginStart="@dimen/bubble_separation"
             app:bubbleTitle="@string/ibu_label"
-            app:bubbleColor="orange" />
+            app:bubbleColor="blue" />
 
     </LinearLayout>
 

@@ -18,7 +18,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_dark_to_blue" />
+        android:background="@drawable/gradient_dark_to_orange" />
 
     <TextView
         android:id="@+id/tv_not_available"

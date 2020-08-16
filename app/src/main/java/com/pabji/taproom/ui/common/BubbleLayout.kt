@@ -24,7 +24,7 @@ class BubbleLayout @JvmOverloads constructor(
 
     enum class BubbleBackground(val res: Int) {
         PURPLE(R.drawable.circle_purple_background),
-        ORANGE(R.drawable.circle_orange_background)
+        BLUE(R.drawable.circle_blue_background)
     }
 
     init {

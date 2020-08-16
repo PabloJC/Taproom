@@ -4,7 +4,7 @@
         <attr name="bubbleTitle" format="string" />
         <attr name="bubbleColor" format="enum">
             <enum name="purple" value="0" />
-            <enum name="orange" value="1" />
+            <enum name="blue" value="1" />
         </attr>
     </declare-styleable>
 </resources>
