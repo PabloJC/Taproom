@@ -40,13 +40,17 @@ val DISPATCHER_IO = named("DISPATCHER_IO")
 val DISPATCHER_MAIN = named("DISPATCHER_MAIN")
 val DISPATCHER_DEFAULT = named("DISPATCHER_DEFAULT")
 
+val BASE_URL = named("BASE_URL")
+
 val appModule = module {
+
+    single(BASE_URL) { "https://api.punkapi.com/v2/" }
 
     single {
         Room.databaseBuilder(get(), MyRoomDatabase::class.java, "myDb.db")
             .fallbackToDestructiveMigration().build()
     }
-    single { BeersApiClient("https://api.punkapi.com/v2/") }
+    single { BeersApiClient(get(BASE_URL)) }
 
     factory<BeerRemoteDatasource> { BeerRetrofitDataSource(get(), get(DISPATCHER_IO)) }
     factory<BeerLocalDatasource> { BeerRoomDatasource(get(), get(DISPATCHER_DEFAULT)) }
