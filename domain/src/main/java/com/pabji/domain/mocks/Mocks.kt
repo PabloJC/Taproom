@@ -13,3 +13,5 @@ val mockBeerFlow: Flow<Beer> = listOf(mockBeer).asFlow()
 
 val mockBeerList = (1..20L).map { Beer(it, "") }
 val mockBeerListFlow = listOf(mockBeerList).asFlow()
+
+

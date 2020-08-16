@@ -20,7 +20,7 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class MainViewModelTest {
+class MainViewModelUnitTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()

@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class DetailViewModel(
     private val id: Long,
-    private val getBeer: GetBeerDetail,
+    private val getBeerDetail: GetBeerDetail,
     private val setEmptyBarrel: SetEmptyBarrel,
     uiDispatcher: CoroutineDispatcher
 ) : BaseViewModel(uiDispatcher) {
@@ -34,7 +34,7 @@ class DetailViewModel(
 
     private fun loadData() {
         launch {
-            getBeer(id).map { it.toUIModel() }.collect { _model.value = it }
+            getBeerDetail(id).map { it.toUIModel() }.collect { _model.value = it }
         }
     }
 
