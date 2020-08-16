@@ -7,9 +7,8 @@ This app is a basic app of beers using the Api https://punkapi.com/. Is composed
 Have Internet connectivity
 
 
-```
 <img width="964" alt="java 8 and prio java 8  array review example" src="https://github.com/jaimehernan95/arrayReview-java/blob/master/images/%20arrayExample.png">
-```
+
 
 ### Installing
 
