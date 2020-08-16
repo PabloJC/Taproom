@@ -2,13 +2,11 @@
 
 This app is a basic app of beers using the Api https://punkapi.com/. Is composed in a main screen with a list of beers and a detail screen. 
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Have Internet connectivity
+
+<img width=“964” alt=“java 8 and prio java 8  array review example” src=“https://github.com/jaimehernan95/arrayReview-java/blob/master/images/%20arrayExample.png 50”>
 
 ```
 Give examples
