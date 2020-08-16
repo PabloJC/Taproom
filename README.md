@@ -6,8 +6,7 @@ This app is a basic app of beers using the Api https://punkapi.com/. Is composed
 
 Have Internet connectivity
 
-
-<img width="300" alt="Detail Screen" src="https://github.com/PabloJC/Taproom/PabloJC-patch-1/screenshots/DetailScreen.png">
+![Screen](http://i.imgur.com/ueYXgwK.png)
 
 
 ### Installing
