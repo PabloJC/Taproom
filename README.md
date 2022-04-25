@@ -1,14 +1,20 @@
 # Taproom
 
-This app is a basic app of beers using the Api https://punkapi.com/. Is composed in a main screen with a list of beers and a detail screen. 
+This app is a basic app of beers using the Api https://punkapi.com/. Is composed in a main screen
+with a list of beers and a detail screen.
 
 ### Prerequisites
 
 Have Internet connectivity
 
+### Introduction
 
-<img width="964" alt="java 8 and prio java 8  array review example" src="https://github.com/jaimehernan95/arrayReview-java/blob/master/images/%20arrayExample.png">
+This app show a list of beers and you can click for watch detail screen.
 
+<img width="200" alt="Beer list" src="./screenshots/ScreenMain.png"/> <img width="200" alt="Beer detail" src="./screenshots/ScreenDetail.png"/>
+
+In the detail screen you can click on "Empty barrel" or "Not empty barrel" and in the list view if a
+beer has "Empty barrel" shows with shadow.
 
 ### Installing
 
