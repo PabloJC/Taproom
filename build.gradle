@@ -1,18 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
 
-    ext.kotlin_version = "1.3.72"
+    ext.kotlin_version = "1.6.21"
     ext.nav_version = '2.3.0'
-    ext.room_version = '2.2.5'
+    ext.room_version = '2.4.2'
     ext.retrofit_version = '2.9.0'
     ext.koin_version = '2.1.6'
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.0.1"
+        classpath "com.android.tools.build:gradle:4.0.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
@@ -21,7 +21,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     ext {
@@ -32,7 +32,7 @@ allprojects {
                 cardView           : 'androidx.cardview:cardview:1.0.0',
                 constraintLayout   : 'androidx.constraintlayout:constraintlayout:1.1.3',
                 materialDesign     : 'com.google.android.material:material:1.2.0',
-                lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:2.2.0",
+                lifecycleKtx       : "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0",
                 navigationFragment : "androidx.navigation:navigation-fragment-ktx:$nav_version",
                 navigationKtx      : "androidx.navigation:navigation-ui-ktx:$nav_version",
                 roomRuntime        : "androidx.room:room-runtime:$room_version",
@@ -50,7 +50,7 @@ allprojects {
         ]
 
         libs = [
-                koin                 : "org.koin:koin-android-viewmodel:$koin_version",
+                koin                 : "io.insert-koin:koin-android-viewmodel:$koin_version",
                 coil                 : "io.coil-kt:coil:0.11.0",
                 retrofit             : "com.squareup.retrofit2:retrofit:$retrofit_version",
                 retrofitGsonConverter: "com.squareup.retrofit2:converter-gson:$retrofit_version"
@@ -60,7 +60,7 @@ allprojects {
                 jUnit        : 'junit:junit:4.12',
                 mockitoKotlin: "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0",
                 mockitoInline: "org.mockito:mockito-inline:2.28.2",
-                koinTest     : "org.koin:koin-test:$koin_version",
+                koinTest     : "io.insert-koin:koin-test:$koin_version",
         ]
 
         androidxTestLibs = [
@@ -71,7 +71,7 @@ allprojects {
                 testRunner   : 'androidx.test:runner:1.2.0',
                 espresso     : 'androidx.test.espresso:espresso-contrib:3.2.0',
                 rules        : 'androidx.test:rules:1.2.0',
-                koinTest     : "org.koin:koin-test:$koin_version",
+                koinTest     : "io.insert-koin:koin-test:$koin_version",
                 extJunit     : 'androidx.test.ext:junit-ktx:1.1.1',
         ]
     }

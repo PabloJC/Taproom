@@ -4,15 +4,21 @@ import com.pabji.data.datasources.BeerLocalDatasource
 import com.pabji.data.datasources.BeerRemoteDatasource
 import com.pabji.domain.api.BeerApiResponse
 import com.pabji.domain.model.Beer
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withContext
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class BeerRepositoryImpl(
     private val localDataSource: BeerLocalDatasource,
-    private val remoteDataSource: BeerRemoteDatasource
+    private val remoteDataSource: BeerRemoteDatasource,
+    private val ioDispatcher: CoroutineDispatcher
 ) : BeerRepository {
 
-    override suspend fun getBeers(max: Int, limit: Int): Flow<List<Beer>> =
+    override fun getBeers(max: Int, limit: Int): Flow<List<Beer>> =
         localDataSource.getBeers().onEach { items ->
             val itemsInDB = items.size
             if (itemsInDB < max) {
@@ -21,13 +27,13 @@ class BeerRepositoryImpl(
                     localDataSource.saveBeers(newItems.filterValidBeers(max, itemsInDB))
                 }
             }
-        }
+        }.flowOn(ioDispatcher)
 
-    override suspend fun getBeerDetail(id: Long): Flow<Beer> =
-        localDataSource.getBeerById(id)
+    override fun getBeerDetail(id: Long): Flow<Beer> =
+        localDataSource.getBeerById(id).flowOn(ioDispatcher)
 
     override suspend fun setEmptyBarrel(id: Long, isEmptyBarrel: Boolean) =
-        localDataSource.setBarrelEmptyById(id, isEmptyBarrel)
+        withContext(ioDispatcher) { localDataSource.setBarrelEmptyById(id, isEmptyBarrel) }
 
     private fun List<BeerApiResponse>.filterValidBeers(
         max: Int,

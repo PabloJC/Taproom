@@ -42,7 +42,7 @@ class MainIntegrationTest : AutoCloseKoinTest() {
     @Before
     fun setUp() {
         val vmModule = module {
-            factory { DetailViewModel(ID, get(), get(), get()) }
+            factory { DetailViewModel(ID, get(), get()) }
             factory { GetBeerDetail(get()) }
             factory { SetEmptyBarrel(get()) }
         }

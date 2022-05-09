@@ -38,7 +38,7 @@ class DetailViewModelTest {
 
     @Before
     fun setUp() {
-        vm = DetailViewModel(ID, getBeerDetail, setEmptyBarrel, Dispatchers.Unconfined)
+        vm = DetailViewModel(ID, getBeerDetail, setEmptyBarrel)
     }
 
     @Test

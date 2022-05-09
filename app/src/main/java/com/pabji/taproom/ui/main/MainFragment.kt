@@ -1,22 +1,25 @@
 package com.pabji.taproom.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pabji.taproom.R
 import com.pabji.taproom.data.uimodel.UIItemBeer
 import com.pabji.taproom.databinding.FragmentMainBinding
-import com.pabji.taproom.ui.common.EventObserver
 import com.pabji.taproom.ui.common.GridSpacingItemDecoration
 import com.pabji.taproom.ui.common.base.BaseFragmentViewBinding
 import com.pabji.taproom.ui.common.gone
 import com.pabji.taproom.ui.common.visible
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.android.scope.currentScope
 import org.koin.android.viewmodel.scope.viewModel
 
@@ -39,18 +42,17 @@ class MainFragment : BaseFragmentViewBinding<FragmentMainBinding>() {
         setToolbar(binding.toolbar)
         binding.progressBar.visible()
         with(viewModel) {
-            beerList.observe(viewLifecycleOwner, Observer(::updateList))
-            navigation.observe(viewLifecycleOwner, EventObserver { id ->
-                val action = MainFragmentDirections.actionMainFragmentToDetailFragment(id)
+            beerList.executeOnLifeCycle(::updateList)
+            navigation.executeOnLifeCycle {
+                val action = MainFragmentDirections.actionMainFragmentToDetailFragment(it)
                 navController.navigate(action)
-            })
+            }
         }
     }
 
-    private fun updateList(list: List<UIItemBeer>?) {
-        Log.d("ITEMS", "${list?.size}")
+    private fun updateList(list: List<UIItemBeer>) {
         binding.progressBar.gone()
-        adapter.itemList = list ?: emptyList()
+        adapter.submitList(list)
     }
 
     private fun setRecyclerView() {
@@ -66,6 +68,14 @@ class MainFragment : BaseFragmentViewBinding<FragmentMainBinding>() {
             it.adapter = adapter
             it.addItemDecoration(dividerItemDecoration)
             it.layoutManager = layoutManager
+        }
+    }
+
+    private fun <T> Flow<T>.executeOnLifeCycle(handleResult: (T) -> Unit){
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                collect{ handleResult(it) }
+            }
         }
     }
 

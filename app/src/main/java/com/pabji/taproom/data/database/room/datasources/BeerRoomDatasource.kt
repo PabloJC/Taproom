@@ -13,21 +13,19 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-class BeerRoomDatasource(database: MyRoomDatabase, private val dispatcher: CoroutineDispatcher) :
-    BeerLocalDatasource {
+class BeerRoomDatasource(database: MyRoomDatabase) : BeerLocalDatasource {
 
     private val beersDao = database.beersDao()
 
-    override suspend fun getBeers(): Flow<List<Beer>> =
-        beersDao.getBeers().map { it.toItemBeerList() }.flowOn(dispatcher)
+    override fun getBeers(): Flow<List<Beer>> =
+        beersDao.getBeers().map { it.toItemBeerList() }
 
     override suspend fun saveBeers(it: List<BeerApiResponse>) =
-        withContext(dispatcher) { beersDao.insert(it.map { it.toBeerEntity() }) }
+        beersDao.insert(it.map { it.toBeerEntity() })
 
-    override suspend fun getBeerById(id: Long): Flow<Beer> =
-        beersDao.getBeerById(id).map { it.toBeer() }.flowOn(dispatcher)
+    override fun getBeerById(id: Long): Flow<Beer> =
+        beersDao.getBeerById(id).map { it.toBeer() }
 
     override suspend fun setBarrelEmptyById(id: Long, emptyBarrel: Boolean) =
-        withContext(dispatcher) { beersDao.update(id, emptyBarrel) }
-
+        beersDao.update(id, emptyBarrel)
 }

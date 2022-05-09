@@ -8,6 +8,9 @@ import com.pabji.taproom.data.uimodel.UIItemBeer
 import com.pabji.taproom.data.uimodel.mockUIBeerList
 import com.pabji.taproom.initMockedDi
 import com.pabji.usecases.GetBeers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -32,7 +35,7 @@ class MainViewModelIntegrationTest : AutoCloseKoinTest() {
     @Before
     fun setUp() {
         val vmModule = module {
-            factory { MainViewModel(get(), get()) }
+            factory { MainViewModel(get()) }
             factory { GetBeers(get(), MAX_BEERS, API_PAGE_LIMIT) }
         }
 
@@ -42,8 +45,10 @@ class MainViewModelIntegrationTest : AutoCloseKoinTest() {
 
     @Test
     fun `while observing beerList LiveData, beer list is shown`() {
-        vm.beerList.observeForever(uiModelObserver)
-        verify(uiModelObserver, times(1)).onChanged(mockUIBeerList)
+        runBlocking {
+            val firsItem = vm.beerList.first()
+            Assert.assertEquals(firsItem, mockUIBeerList)
+        }
     }
 
     companion object {

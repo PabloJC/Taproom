@@ -37,8 +37,6 @@ fun Application.initDI() {
 val MAX_BEERS = named("MAX_BEERS")
 val API_PAGE_LIMIT = named("API_PAGE_LIMIT")
 val DISPATCHER_IO = named("DISPATCHER_IO")
-val DISPATCHER_MAIN = named("DISPATCHER_MAIN")
-val DISPATCHER_DEFAULT = named("DISPATCHER_DEFAULT")
 
 val BASE_URL = named("BASE_URL")
 
@@ -52,31 +50,29 @@ val appModule = module {
     }
     single { BeersApiClient(get(BASE_URL)) }
 
-    factory<BeerRemoteDatasource> { BeerRetrofitDataSource(get(), get(DISPATCHER_IO)) }
-    factory<BeerLocalDatasource> { BeerRoomDatasource(get(), get(DISPATCHER_DEFAULT)) }
+    factory<BeerRemoteDatasource> { BeerRetrofitDataSource(get()) }
+    factory<BeerLocalDatasource> { BeerRoomDatasource(get()) }
 }
 
 val dataModule = module {
-    factory<BeerRepository> { BeerRepositoryImpl(get(), get()) }
+    factory<BeerRepository> { BeerRepositoryImpl(get(), get(), get(DISPATCHER_IO)) }
 }
 
 val scopesModule = module {
 
-    single<CoroutineDispatcher>(DISPATCHER_MAIN) { Dispatchers.Main }
     single<CoroutineDispatcher>(DISPATCHER_IO) { Dispatchers.IO }
-    single<CoroutineDispatcher>(DISPATCHER_DEFAULT) { Dispatchers.Default }
 
     factory(MAX_BEERS) { 20 }
     factory(API_PAGE_LIMIT) { 80 }
 
     scope(named<MainFragment>()) {
-        viewModel { MainViewModel(get(), get(DISPATCHER_MAIN)) }
+        viewModel { MainViewModel(get()) }
         scoped { GetBeers(get(), get(MAX_BEERS), get(API_PAGE_LIMIT)) }
     }
 
     scope(named<DetailFragment>()) {
         viewModel { (id: Long) ->
-            DetailViewModel(id, get(), get(), get(DISPATCHER_MAIN))
+            DetailViewModel(id, get(), get())
         }
         scoped { GetBeerDetail(get()) }
         scoped { SetEmptyBarrel(get()) }

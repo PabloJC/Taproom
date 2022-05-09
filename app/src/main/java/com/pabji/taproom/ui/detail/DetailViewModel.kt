@@ -2,6 +2,8 @@ package com.pabji.taproom.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.pabji.taproom.data.uimodel.UIBeerDetail
 import com.pabji.taproom.data.uimodel.toUIModel
 import com.pabji.taproom.ui.common.base.BaseViewModel
@@ -15,9 +17,8 @@ import kotlinx.coroutines.launch
 class DetailViewModel(
     private val id: Long,
     private val getBeerDetail: GetBeerDetail,
-    private val setEmptyBarrel: SetEmptyBarrel,
-    uiDispatcher: CoroutineDispatcher
-) : BaseViewModel(uiDispatcher) {
+    private val setEmptyBarrel: SetEmptyBarrel
+) : ViewModel(){
 
     private val _model = MutableLiveData<UIBeerDetail>()
     val model: LiveData<UIBeerDetail>
@@ -27,13 +28,13 @@ class DetailViewModel(
         }
 
     fun onEmptyBarrelButtonClick() {
-        launch {
+        viewModelScope.launch {
             setEmptyBarrel(id, !isBarrelEmpty())
         }
     }
 
     private fun loadData() {
-        launch {
+        viewModelScope.launch {
             getBeerDetail(id).map { it.toUIModel() }.collect { _model.value = it }
         }
     }

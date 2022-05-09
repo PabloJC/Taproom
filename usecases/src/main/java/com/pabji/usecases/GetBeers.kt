@@ -9,5 +9,5 @@ class GetBeers(
     private val max: Int,
     private val limit: Int
 ) {
-    suspend operator fun invoke(): Flow<List<Beer>> = repository.getBeers(max, limit)
+    operator fun invoke(): Flow<List<Beer>> = repository.getBeers(max, limit)
 }

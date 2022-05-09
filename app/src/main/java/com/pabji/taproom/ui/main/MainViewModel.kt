@@ -1,39 +1,28 @@
 package com.pabji.taproom.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.pabji.taproom.data.uimodel.UIItemBeer
 import com.pabji.taproom.data.uimodel.toUIModelList
-import com.pabji.taproom.ui.common.Event
-import com.pabji.taproom.ui.common.base.BaseViewModel
 import com.pabji.usecases.GetBeers
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val getBeers: GetBeers,
-    uiDispatcher: CoroutineDispatcher
-) : BaseViewModel(uiDispatcher) {
+    private val getBeers: GetBeers
+) : ViewModel() {
 
-    private val _navigation = MutableLiveData<Event<Long>>()
-    val navigation: LiveData<Event<Long>> = _navigation
+    private val _navigation = Channel<Long>()
+    val navigation: Flow<Long> = _navigation.receiveAsFlow()
 
-    private val _beerList = MutableLiveData<List<UIItemBeer>>()
-    val beerList: LiveData<List<UIItemBeer>>
-        get() {
-            if (_beerList.value == null) loadData()
-            return _beerList
-        }
-
-    fun loadData() {
-        launch {
-            getBeers().map { it.toUIModelList() }.collect { _beerList.value = it }
-        }
-    }
+    val beerList: Flow<List<UIItemBeer>> get() = getBeers().map { it.toUIModelList() }
 
     fun onItemClicked(id: Long) {
-        _navigation.value = Event(id)
+        viewModelScope.launch {
+            _navigation.send(id)
+        }
     }
 }
